@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
      * 正确的创建方式,是采用静态内部类,并且使用弱引用进行引用起来
      */
 
-    private class MyHandler extends Handler {
+    private static class MyHandler extends Handler {
 
         WeakReference<MainActivity> mReference;
 
