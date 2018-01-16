@@ -9,6 +9,8 @@ import android.os.Message;
 import android.os.MessageQueue;
 import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
+
 /**
  * handler相关知识的从新回顾
  */
@@ -22,6 +24,30 @@ public class MainActivity extends Activity {
     /**
      * 两种不同的创建handler的方式
      */
+
+
+    /**
+     * 正确的创建方式,是采用静态内部类,并且使用弱引用进行引用起来
+     */
+
+    private class MyHandler extends Handler {
+
+        WeakReference<MainActivity> mReference;
+
+        public MyHandler(MainActivity activity) {
+            mReference = new WeakReference<MainActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            MainActivity mainActivity = mReference.get();
+            if (mainActivity != null) {
+                //里边在进行应该有的操作
+            }
+        }
+    }
+
     //非静态的匿名内部类,可能造成内存泄漏
     private Handler handler = new Handler() {
         @Override
